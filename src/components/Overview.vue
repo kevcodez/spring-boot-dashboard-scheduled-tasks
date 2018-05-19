@@ -27,7 +27,7 @@
     <div class="tile is-ancestor" v-for="(chunk, idx) in chunkedItems" v-bind:key="idx">
       <div class="tile is-parent" v-for="job in chunk" v-bind:key="job.name">
         <div v-bind:class="cssClass(job)">
-            <p class="title is-capitalized"><router-link to="/job">{{job.methodName}}</router-link></p>
+          <p class="title is-capitalized"><router-link :to="'/' + job.className + '/' + job.methodName">{{job.methodName}}</router-link></p>
           <p class="subtitle is-size-7">{{job.className}}</p>
           
               <span v-if="job.lastRunStatus"><icon name="play-circle"></icon> Started: 15 minutes ago<br /></span>
