@@ -2,10 +2,13 @@
   <div class="overview">
     <nav class="breadcrumb" aria-label="breadcrumbs">
       <ul>
-        <li class="is-active">
+        <li v-bind:class="[className ? '' : 'is-active']">
           <a href="#">Scheduled Jobs</a>
         </li>
-   
+
+          <li v-if="className" class="is-active">
+              {{className}}
+          </li>
       </ul>
     </nav>
 
@@ -13,7 +16,7 @@
       Loading...
     </div>
 
-       <div v-if="error" class="notification is-danger">
+    <div v-if="error" class="notification is-danger">
       {{ error }}
     </div>
 
@@ -23,15 +26,15 @@
     
     <div class="tile is-ancestor" v-for="(chunk, idx) in chunkedItems" v-bind:key="idx">
       <div class="tile is-parent" v-for="job in chunk" v-bind:key="job.name">
-        <article v-bind:class="cssClass(job)">
-          <p class="title is-capitalized"><a href="#">{{job.methodName}}</a></p>
+        <div v-bind:class="cssClass(job)">
+            <p class="title is-capitalized"><router-link to="/job">{{job.methodName}}</router-link></p>
           <p class="subtitle is-size-7">{{job.className}}</p>
           
               <span v-if="job.lastRunStatus"><icon name="play-circle"></icon> Started: 15 minutes ago<br /></span>
               <span v-else><icon name="pause" /> Job did not run yet.</span>
               <span v-if="job.lastRunStatus && job.status !== 'RUNNING'"><icon name="redo"></icon> Next start approx: 3 minutes</span>
         
-        </article>
+        </div>
       </div>
     </div>
   </div>
@@ -49,6 +52,10 @@ export default {
   },
   created() {
     this.fetchData();
+
+      setInterval(function () {
+          this.fetchData();
+      }.bind(this), 10000);
   },
   watch: {
     $route: "fetchData"
@@ -56,13 +63,17 @@ export default {
   computed: {
     chunkedItems() {
       return this.chunk(this.jobs, 4);
+    },
+    className() {
+        return this.$route.params.class
     }
   },
   methods: {
+
     chunk: function(arr, size) {
       if (!arr) return null;
-      var newArr = [];
-      for (var i = 0; i < arr.length; i += size) {
+      let newArr = [];
+      for (let i = 0; i < arr.length; i += size) {
         newArr.push(arr.slice(i, i + size));
       }
       return newArr;
@@ -86,9 +97,9 @@ export default {
     },
 
     fetchData() {
-      this.error = this.jobs = null;
+      this.error = null;
       this.loading = true;
-      var self = this;
+      let self = this;
 
       fetch(
         "https://gist.githubusercontent.com/kevcodez/6c661f551cc8e6e00af2f22e9e6c57b8/raw/f446ada52c1ba87cfca4839ea7a704b78f992551/gistfile1.txt"

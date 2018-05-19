@@ -10,11 +10,12 @@ import Icon from 'vue-awesome/components/Icon'
 Vue.config.productionTip = false;
 
 Vue.use(VueRouter);
-Vue.component('icon', Icon)
+Vue.component('icon', Icon);
 
 const routes = [
-  { path: '/overview', component: Overview },
-  { path: '/job', component: Job }
+  { path: '/', component: Overview },
+  { path: '/:class', component: Overview },
+  { path: '/:class/:method', component: Job }
 ];
 
 // 3. Create the router instance and pass the `routes` option
@@ -22,10 +23,10 @@ const routes = [
 // keep it simple for now.
 const router = new VueRouter({
   routes
-})
+});
 
 
 new Vue({
   router,
   render: h => h(App)
-}).$mount('#app')
+}).$mount('#app');
