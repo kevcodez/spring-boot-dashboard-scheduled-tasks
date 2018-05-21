@@ -21,14 +21,13 @@
                     <div class="box">
                         <p class="title is-capitalized">{{this.$route.params.method}}</p>
                         <p class="subtitle">{{this.$route.params.class}}</p>
-                        <p class="is-size-5 has-text-weight-semibold">Next start approx: 3 minutes</p>
 
                         <hr/>
 
                         <p class="is-size-5 has-text-weight-semibold">Stats</p>
-                        <p>Average: 100ms</p>
+                        <p>Average time: {{job.averageRunTimeInMs ? job.averageRunTimeInMs + ' ms' : '-'}}</p>
                         <p>Run count: {{job.runCount || '0'}}</p>
-                        <p>Exceptions occured: {{job.exceptionCount || '-'}}</p>
+                        <p>Exceptions occured: {{job.exceptionCount || '0'}}</p>
 
                         <hr/>
 
@@ -54,23 +53,22 @@
                             <div class="columns">
                                 <div class="column is-4">
                                     <icon name="play-circle"/>
-                                    Started five minutes ago
+                                    Started {{startTimeAsText(job.startedAt)}}
                                 </div>
 
                                 <div class="column is-4">
-                                    <a href="#">weudg8qwdpgqwgdzoqwdqwgozdqwgz</a>
+                                    <router-link :to="job.methodName + '/' + run.uuid">{{run.uuid}}</router-link>
                                 </div>
-
 
                                 <div class="column">
                                     <span v-if="!run.endedAt">
                                         <icon name="spinner" spin/> Currently running
                                     </span>
                                     <span v-else-if="run.exception">
-                                        <icon name="exclamation-circle"/> Error after xxx
+                                        <icon name="exclamation-circle"/> Error after {{durationAsText(job.duration)}}
                                     </span>
                                     <span v-else>
-                                        <icon name="check-circle"/> Took xxx
+                                        <icon name="check-circle"/> Took {{durationAsText(job.duration)}}
                                     </span>
                                 </div>
                             </div>
@@ -84,6 +82,8 @@
 </template>
 
 <script>
+    import moment from 'moment'
+
     export default {
         name: "Job",
         data() {
@@ -103,8 +103,13 @@
         watch: {
             $route: "fetchData"
         },
-        computed: {},
         methods: {
+            durationAsText(duration) {
+                return moment.duration(duration).humanize()
+            },
+            startTimeAsText(timeString) {
+               return moment(timeString).fromNow();
+            },
             fetchData() {
                 this.error = null;
                 this.loading = true;
