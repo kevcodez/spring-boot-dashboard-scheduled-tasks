@@ -8,3 +8,5 @@ This is a dashboard based on the data retrieved via https://github.com/kevcodez/
 ![](images/dashboard_2.PNG?raw=true)
 
 ![](images/dashboard_3.PNG?raw=true)
+
+![](images/dashboard_4.PNG?raw=true)

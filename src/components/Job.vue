@@ -48,7 +48,7 @@
                     </div>
 
                     <div v-else>
-                        <div class="notification is-info" v-for="(run, idx) in job.runs" v-bind:key="idx">
+                        <div v-bind:class="cssClassForRun(run)" v-for="(run, idx) in job.runs" v-bind:key="idx">
 
                             <div class="columns">
                                 <div class="column is-4">
@@ -104,6 +104,17 @@
             $route: "fetchData"
         },
         methods: {
+            cssClassForRun(run) {
+                let style = 'is-primary';
+
+                if (!run.endedAt)
+                    style = 'is-info';
+                else if(run.exception)
+                    style = 'is.danger';
+
+                return 'notification ' + style;
+            },
+
             durationAsText(duration) {
                 return moment.duration(duration).humanize()
             },
