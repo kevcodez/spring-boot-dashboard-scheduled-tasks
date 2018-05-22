@@ -4,10 +4,10 @@
             <div class="tile is-parent is-4" v-for="job in chunk" v-bind:key="job.name">
                 <div v-bind:class="cssClass(job)">
                     <p class="title is-capitalized is-size-4">
-                        <router-link :to="job.className + '/' + job.methodName">{{job.methodName}}</router-link>
+                        <router-link :to="job.host + '/' + job.className + '/' + job.methodName">{{job.methodName}}</router-link>
                     </p>
                     <p class="subtitle is-size-7">
-                        <router-link :to="job.className">{{job.className}}</router-link>
+                        <router-link :to="job.host + '/' + job.className">{{job.className}}</router-link>
                     </p>
 
                     <span v-if="job.latestRun" class="is-size-6"><icon name="play-circle"/> Last run started {{startTimeAsText(job.latestRun.startedAt)}}<br/></span>

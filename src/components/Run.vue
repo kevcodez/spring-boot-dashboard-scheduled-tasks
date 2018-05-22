@@ -6,11 +6,13 @@
                     <router-link to="/">Scheduled Jobs</router-link>
                 </li>
                 <li>
-                    <router-link :to="'/' + this.$route.params.class">{{this.$route.params.class}}</router-link>
+                    <router-link :to="'/' + this.$route.params.host">{{this.$route.params.host}}</router-link>
                 </li>
-
+                <li>
+                    <router-link :to="'/' + this.$route.params.host + '/' + this.$route.params.class">{{this.$route.params.class}}</router-link>
+                </li>
                 <li class="is-capitalized">
-                    <router-link :to="'/' + this.$route.params.class + '/' + this.$route.params.method">
+                    <router-link :to="'/' + this.$route.params.host + '/' + this.$route.params.class + '/' + this.$route.params.method">
                         {{this.$route.params.method}}
                     </router-link>
                 </li>
@@ -90,9 +92,9 @@
                 this.loading = true;
                 let self = this;
 
-                fetch(
-                    "https://gist.githubusercontent.com/kevcodez/f4db9c7c7d6375e18df6d3822b883fff/raw/29054721aa77333c109b2291611000120b0a4a2b/gistfile1.txt"
-                )
+                let params = this.$route.params;
+                let serviceByHost = JSON.parse(process.env.VUE_APP_SERVICES).filter(it => it.host === params.host)[0];
+                fetch(serviceByHost.url + '/' + params.class + '/' + params.method + '/' + params.uuid)
                     .then(function (response) {
                         self.loading = false;
                         return response.json();

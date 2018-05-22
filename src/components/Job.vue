@@ -6,7 +6,10 @@
                     <router-link to="/">Scheduled Jobs</router-link>
                 </li>
                 <li>
-                    <router-link :to="'/' + this.$route.params.class">{{this.$route.params.class}}</router-link>
+                    <router-link :to="'/' + this.$route.params.host">{{this.$route.params.host}}</router-link>
+                </li>
+                <li>
+                    <router-link :to="'/' + this.$route.params.host + '/' + this.$route.params.class">{{this.$route.params.class}}</router-link>
                 </li>
 
                 <li class="is-active is-capitalized">
@@ -25,9 +28,9 @@
                         <hr/>
 
                         <p class="is-size-5 has-text-weight-semibold">Stats</p>
-                        <p>Average time: {{job.averageRunTimeInMs ? job.averageRunTimeInMs + ' ms' : '-'}}</p>
-                        <p>Run count: {{job.runCount || '0'}}</p>
-                        <p>Exceptions occured: {{job.exceptionCount || '0'}}</p>
+                        <p>Average time: {{job.stats.averageDurationInMs !== undefined ? job.stats.averageDurationInMs + ' ms' : '-'}}</p>
+                        <p>Run count: {{job.stats.numberOfInvocations}}</p>
+                        <p>Exceptions occured: {{job.stats.numberOfExceptions}}</p>
 
                         <hr/>
 
@@ -57,7 +60,7 @@
                                 </div>
 
                                 <div class="column is-4">
-                                    <router-link :to="job.methodName + '/' + run.uuid">{{run.uuid}}</router-link>
+                                    <router-link :to="'/' + job.host + '/' + job.className + '/' + job.methodName + '/' + run.uuid">{{run.uuid}}</router-link>
                                 </div>
 
                                 <div class="column">
@@ -107,10 +110,10 @@
             cssClassForRun(run) {
                 let style = 'is-primary';
 
-                if (!run.endedAt)
-                    style = 'is-info';
-                else if (run.exception)
-                    style = 'is.danger';
+                 if (run.exception)
+                    style = 'is-danger';
+                 else if (!run.endedAt)
+                     style = 'is-info';
 
                 return 'notification ' + style;
             },
@@ -126,15 +129,16 @@
                 this.loading = true;
                 let self = this;
 
-                fetch(
-                    "https://gist.githubusercontent.com/kevcodez/6c9b3cd72700f62b3f76956157ab749a/raw/46e76ba63fb1272b05a288ad033d4b06e92be1d3/gistfile1.txt"
-                )
+                let params = self.$route.params;
+                let serviceByHost = JSON.parse(process.env.VUE_APP_SERVICES).filter(it => it.host === params.host)[0];
+                fetch(serviceByHost.url + '/' + params.class + '/' + params.method)
                     .then(function (response) {
                         self.loading = false;
                         return response.json();
                     })
                     .then(function (myJson) {
                         self.job = myJson;
+                        self.job.host = serviceByHost.host;
                     })
                     .catch(function (err) {
                         console.log(err);

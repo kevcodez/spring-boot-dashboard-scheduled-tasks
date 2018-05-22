@@ -40,7 +40,7 @@
             return {
                 jobs: null,
                 error: null,
-                urls: process.env.VUE_APP_URLS.split(',')
+                services: JSON.parse(process.env.VUE_APP_SERVICES)
             };
         },
         created() {
@@ -96,8 +96,8 @@
                 this.error = null;
                 let self = this;
 
-                self.urls.forEach(url => {
-                    fetch(url)
+                self.services.forEach(service => {
+                    fetch(service.url)
                         .then(function (response) {
                             return response.json();
                         })
@@ -105,8 +105,10 @@
                             if (self.jobs == null)
                                 self.jobs = new Map();
 
-                            self.jobs.delete(url);
-                            self.jobs.set(url, myJson);
+                            myJson.forEach(entry => entry.host = service.host);
+
+                            self.jobs.delete(service.host);
+                            self.jobs.set(service.host, myJson);
                             self.$forceUpdate();
                         })
                         .catch(function (err) {

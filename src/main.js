@@ -15,9 +15,10 @@ Vue.component('icon', Icon);
 
 const routes = [
     {path: '/', component: Overview},
-    {path: '/:class', component: Overview},
-    {path: '/:class/:method', component: Job},
-    {path: '/:class/:method/:uuid', component: Run}
+    {path: '/:host', component: Overview},
+    {path: '/:host/:class', component: Overview},
+    {path: '/:host/:class/:method', component: Job},
+    {path: '/:host/:class/:method/:uuid', component: Run}
 ];
 
 // 3. Create the router instance and pass the `routes` option
