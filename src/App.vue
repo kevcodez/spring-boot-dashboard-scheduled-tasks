@@ -1,22 +1,22 @@
 <template>
-  <div id="app">
-     <section class="section">
-     <router-view></router-view>
+    <div id="app">
+        <section class="section">
+            <router-view></router-view>
 
-  </section>
-    
-  </div>
+        </section>
+
+    </div>
 </template>
 
 <script>
-import Overview from './components/Overview.vue'
-import Job from './components/Job.vue'
+    import Overview from './components/Overview.vue'
+    import Job from './components/Job.vue'
 
-export default {
-  name: 'app',
-  components: {
-    Overview,
-    Job
-  }
-}
+    export default {
+        name: 'app',
+        components: {
+            Overview,
+            Job
+        }
+    }
 </script>

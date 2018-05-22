@@ -83,7 +83,7 @@
                 return moment(str);
             },
             durationAsText(duration) {
-              return moment.duration(duration).humanize();
+                return moment.duration(duration).humanize();
             },
             fetchData() {
                 this.error = null;

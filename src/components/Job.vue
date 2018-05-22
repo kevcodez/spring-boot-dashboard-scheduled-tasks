@@ -109,7 +109,7 @@
 
                 if (!run.endedAt)
                     style = 'is-info';
-                else if(run.exception)
+                else if (run.exception)
                     style = 'is.danger';
 
                 return 'notification ' + style;
@@ -119,7 +119,7 @@
                 return moment.duration(duration).humanize()
             },
             startTimeAsText(timeString) {
-               return moment(timeString).fromNow();
+                return moment(timeString).fromNow();
             },
             fetchData() {
                 this.error = null;
