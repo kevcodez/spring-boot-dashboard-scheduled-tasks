@@ -2,12 +2,19 @@
     <div class="overview">
         <nav class="breadcrumb" aria-label="breadcrumbs">
             <ul>
-                <li v-bind:class="[className ? '' : 'is-active']">
-                    <a href="#">Scheduled Jobs</a>
+                <li v-bind:class="[this.$route.params.class || this.$route.params.host ? '' : 'is-active']">
+                    <router-link to="/">Scheduled Jobs</router-link>
                 </li>
 
-                <li v-if="className" class="is-active">
-                    {{className}}
+                <li v-if="this.$route.params.host && !this.$route.params.class" class="is-active">
+                    <a href="#">{{this.$route.params.host}}</a>
+                </li>
+                <li v-else-if="this.$route.params.host && this.$route.params.class">
+                    <router-link :to="'/' + this.$route.params.host">{{this.$route.params.host}}</router-link>
+                </li>
+
+                <li v-if="this.$route.params.class" class="is-active">
+                    <a href="#">{{this.$route.params.class}}</a>
                 </li>
             </ul>
         </nav>
@@ -86,9 +93,6 @@
                 });
 
                 return jobsWithError;
-            },
-            className() {
-                return this.$route.params.class
             }
         },
         methods: {
@@ -96,7 +100,11 @@
                 this.error = null;
                 let self = this;
 
-                self.services.forEach(service => {
+                let services = self.services;
+                if (self.$route.params.host)
+                    services = services.filter(it => it.host === self.$route.params.host);
+
+                services.forEach(service => {
                     fetch(service.url)
                         .then(function (response) {
                             return response.json();
