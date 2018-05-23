@@ -21,7 +21,7 @@
                 </li>
 
                 <li class="is-active is-capitalized">
-                    <a href="#">{{this.$route.params.uuid}}</a>
+                    <a href="#">Run {{this.$route.params.uuid}}</a>
                 </li>
             </ul>
         </nav>
