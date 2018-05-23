@@ -9,10 +9,13 @@
                     <router-link :to="'/' + this.$route.params.host">{{this.$route.params.host}}</router-link>
                 </li>
                 <li>
-                    <router-link :to="'/' + this.$route.params.host + '/' + this.$route.params.class">{{this.$route.params.class}}</router-link>
+                    <router-link :to="'/' + this.$route.params.host + '/' + this.$route.params.class">
+                        {{this.$route.params.class}}
+                    </router-link>
                 </li>
                 <li class="is-capitalized">
-                    <router-link :to="'/' + this.$route.params.host + '/' + this.$route.params.class + '/' + this.$route.params.method">
+                    <router-link
+                        :to="'/' + this.$route.params.host + '/' + this.$route.params.class + '/' + this.$route.params.method">
                         {{this.$route.params.method}}
                     </router-link>
                 </li>
@@ -50,8 +53,11 @@
             </div>
 
             <div v-if="run.exception" class="notification is-danger">
-                <p class="is-size-5">Exception occured</p>
-                {{run.exception}}
+                <p class="is-size-5">Exception message</p>
+                <p>{{run.exception.message}}</p>
+                <hr/>
+                <p class="is-size-5">Stacktrace</p>
+                <p>{{run.exception.stackTrace}}</p>
             </div>
         </div>
 
