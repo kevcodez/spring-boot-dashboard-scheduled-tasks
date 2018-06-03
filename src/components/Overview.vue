@@ -105,7 +105,7 @@
                     services = services.filter(it => it.host === self.$route.params.host);
 
                 services.forEach(service => {
-                    fetch(service.url)
+                    this.$http.get(service.url)
                         .then(function (response) {
                             return response.json();
                         })
@@ -120,7 +120,6 @@
                             self.$forceUpdate();
                         })
                         .catch(function (err) {
-                            console.log(err);
                             self.error = err;
                         });
                 });

@@ -4,17 +4,19 @@ import Overview from './components/Overview'
 import Job from './components/Job'
 import Run from './components/Run'
 import VueRouter from 'vue-router'
+import VueResource from 'vue-resource';
 import 'bulma/css/bulma.css'
 import 'vue-awesome/icons/play-circle';
 import 'vue-awesome/icons/spinner';
 import 'vue-awesome/icons/check-circle';
 import 'vue-awesome/icons/exclamation-circle';
 import 'vue-awesome/icons/pause';
-import Icon from 'vue-awesome/components/Icon'
+import Icon from 'vue-awesome/components/Icon';
 
 Vue.config.productionTip = false;
 
 Vue.use(VueRouter);
+Vue.use(VueResource);
 Vue.component('icon', Icon);
 
 const routes = [

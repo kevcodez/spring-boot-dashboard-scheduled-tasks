@@ -100,16 +100,15 @@
 
                 let params = this.$route.params;
                 let serviceByHost = JSON.parse(process.env.VUE_APP_SERVICES).filter(it => it.host === params.host)[0];
-                fetch(serviceByHost.url + '/' + params.class + '/' + params.method + '/' + params.uuid)
-                    .then(function (response) {
+                this.$http.get(serviceByHost.url + '/' + params.class + '/' + params.method + '/' + params.uuid)
+                    .then(response => {
                         self.loading = false;
                         return response.json();
                     })
-                    .then(function (myJson) {
+                    .then(myJson => {
                         self.run = myJson;
                     })
-                    .catch(function (err) {
-                        console.log(err);
+                    .catch(err => {
                         self.loading = false;
                         self.error = err;
                     });

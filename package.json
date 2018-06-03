@@ -9,16 +9,17 @@
   },
   "dependencies": {
     "bulma": "^0.7.1",
-    "moment": "^2.22.1",
+    "moment": "^2.22.2",
     "vue": "^2.5.16",
-    "vue-awesome": "^3.0.0",
+    "vue-awesome": "3.0.2",
+    "vue-resource": "^1.5.1",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.0.0-beta.10",
-    "@vue/cli-plugin-eslint": "^3.0.0-beta.10",
-    "@vue/cli-service": "^3.0.0-beta.10",
-    "vue-template-compiler": "^2.5.13"
+    "@vue/cli-plugin-babel": "^3.0.0-beta.15",
+    "@vue/cli-plugin-eslint": "^3.0.0-beta.15",
+    "@vue/cli-service": "^3.0.0-beta.15",
+    "vue-template-compiler": "^2.5.16"
   },
   "babel": {
     "presets": [

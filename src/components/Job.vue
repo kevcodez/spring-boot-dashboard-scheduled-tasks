@@ -131,7 +131,7 @@
 
                 let params = self.$route.params;
                 let serviceByHost = JSON.parse(process.env.VUE_APP_SERVICES).filter(it => it.host === params.host)[0];
-                fetch(serviceByHost.url + '/' + params.class + '/' + params.method)
+                this.$http.get(serviceByHost.url + '/' + params.class + '/' + params.method)
                     .then(function (response) {
                         self.loading = false;
                         return response.json();
@@ -141,7 +141,6 @@
                         self.job.host = serviceByHost.host;
                     })
                     .catch(function (err) {
-                        console.log(err);
                         self.loading = false;
                         self.error = err;
                     });
