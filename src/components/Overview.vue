@@ -1,5 +1,16 @@
 <template>
     <div class="overview">
+        <div style="margin-bottom: 20px">
+            <router-link class="button is-light"
+                         style="margin-right: 10px"
+                         :to="'/' + service.host"
+                         active-class="is-dark"
+                         v-for="service in services"
+                        :key="service.host">
+                {{service.host}}
+            </router-link>
+        </div>
+
         <nav class="breadcrumb" aria-label="breadcrumbs">
             <ul>
                 <li v-bind:class="[this.$route.params.class || this.$route.params.host ? '' : 'is-active']">
