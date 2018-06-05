@@ -25,7 +25,7 @@ The .env.* files include the URLs to the services providing scheduled task track
 You can configure multiple services.
 
 ```json
-[{"host": "localhost", "url": "http://localhost:8081/scheduled-jobs"}]
+[{"host": "Billing-Service", "url": "https://my.api.com/billing-service/scheduled-jobs"}, {"host": "Product-Service", "url": "https://my.api.com/product-service/scheduled-jobs"}]
 ```
 
 # Development
