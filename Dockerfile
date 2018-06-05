@@ -1,6 +1,6 @@
 #==================== Building Stage ================================================ 
 
-FROM node:9.11.1 as node
+FROM node:9.11.1-alpine as node
 
 # Create a directory where our app will be placed. This might not be necessary
 RUN mkdir -p /dashboard
@@ -24,7 +24,7 @@ EXPOSE 8080
 RUN yarn build
 
 #==================== Setting up stage ==================== 
-FROM nginx:1.13.12-alpine
+FROM nginx:1.15.0-alpine
 
 COPY --from=node /dashboard/dist/ /usr/share/nginx/html
 

@@ -2,7 +2,7 @@
     <div class="overview">
         <div style="margin-bottom: 20px">
             <router-link class="button is-light"
-                         style="margin-right: 10px"
+                         style="margin-right: 10px; margin-bottom: 10px"
                          :to="'/' + service.host"
                          active-class="is-dark"
                          v-for="service in services"
@@ -34,16 +34,8 @@
             Loading...
         </div>
 
-        <div v-if="error" class="notification is-danger">
-            {{ error }}
-        </div>
-
-        <div v-if="jobs">
-            {{ error }}
-        </div>
-
-        <OverviewJobs v-bind:jobs="jobsWithError" key="ERROR" v-if="jobsWithError" style="margin-bottom: 20px"/>
-        <OverviewJobs v-bind:jobs="jobsWithoutError" key="WITHOUT_ERROR" v-if="jobsWithoutError"/>
+        <OverviewJobs v-bind:jobs="jobsWithError()" key="ERROR" v-if="jobsWithError()" style="margin-bottom: 20px"/>
+        <OverviewJobs v-bind:jobs="jobsWithoutError()" key="WITHOUT_ERROR" v-if="jobsWithoutError()"/>
     </div>
 </template>
 
@@ -51,13 +43,11 @@
     import OverviewJobs from "./OverviewJobs";
 
     export default {
-
         name: "Overview",
         components: {OverviewJobs},
         data() {
             return {
                 jobs: null,
-                error: null,
                 services: JSON.parse(process.env.VUE_APP_SERVICES)
             };
         },
@@ -69,9 +59,12 @@
             }.bind(this), 10000);
         },
         watch: {
-            $route: "fetchData"
+            $route (to, from) {
+                this.jobs = null;
+                this.fetchData();
+            }
         },
-        computed: {
+        methods: {
             jobsWithoutError() {
                 if (!this.jobs)
                     return [];
@@ -85,7 +78,12 @@
                     } else if (!a.lastFinishedRun && b.lastFinishedRun) {
                         return 1;
                     } else {
-                        return a.methodName.localeCompare(b.methodName);
+                        let methodName = a.methodName.localeCompare(b.methodName);
+
+                        if (methodName === 0)
+                            return a.className.localeCompare(b.className);
+
+                        return methodName;
                     }
                 });
 
@@ -104,11 +102,8 @@
                 });
 
                 return jobsWithError;
-            }
-        },
-        methods: {
+            },
             fetchData() {
-                this.error = null;
                 let self = this;
 
                 let services = self.services;
@@ -128,10 +123,11 @@
 
                             self.jobs.delete(service.host);
                             self.jobs.set(service.host, myJson);
+
                             self.$forceUpdate();
                         })
                         .catch(function (err) {
-                            self.error = err;
+                            console.log(err);
                         });
                 });
             }

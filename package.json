@@ -11,7 +11,7 @@
     "bulma": "^0.7.1",
     "moment": "^2.22.2",
     "vue": "^2.5.16",
-    "vue-awesome": "3.0.2",
+    "vue-awesome": "^3.0.2",
     "vue-resource": "^1.5.1",
     "vue-router": "^3.0.1"
   },

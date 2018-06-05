@@ -56,7 +56,7 @@
                             <div class="columns">
                                 <div class="column is-4">
                                     <icon name="play-circle"/>
-                                    Started {{startTimeAsText(job.startedAt)}}
+                                    Started {{startTimeAsText(run.startedAt)}}
                                 </div>
 
                                 <div class="column is-4">
@@ -68,10 +68,10 @@
                                         <icon name="spinner" spin/> Currently running
                                     </span>
                                     <span v-else-if="run.exception">
-                                        <icon name="exclamation-circle"/> Error after {{durationAsText(job.duration)}}
+                                        <icon name="exclamation-circle"/> Error after {{durationAsText(run.duration)}}
                                     </span>
                                     <span v-else>
-                                        <icon name="check-circle"/> Took {{durationAsText(job.duration)}}
+                                        <icon name="check-circle"/> Took {{durationAsText(run.duration)}}
                                     </span>
                                 </div>
                             </div>
