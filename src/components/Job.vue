@@ -17,12 +17,18 @@
                 </li>
             </ul>
         </nav>
-        <div v-if="job">
 
+        <div v-if="errorTrigger" class="notification is-danger">
+            Error while triggering job. Either the job was not found or the job is currently running.
+        </div>
+
+        <div v-if="job">
             <div class="columns">
                 <div class="column">
                     <div class="box">
-                        <p class="title is-capitalized">{{this.$route.params.method}}</p>
+                        <p class="title is-capitalized">{{this.$route.params.method}}
+                            <a v-on:click="triggerJob()"><span class="is-pulled-right" title="Trigger Job"><icon style="height: 1em; width: auto" name="play-circle"/> </span></a>
+                        </p>
                         <p class="subtitle">{{this.$route.params.class}}</p>
 
                         <hr/>
@@ -93,7 +99,8 @@
             return {
                 loading: false,
                 job: null,
-                error: null
+                error: null,
+                errorTrigger: null
             };
         },
         created() {
@@ -107,6 +114,19 @@
             $route: "fetchData"
         },
         methods: {
+            triggerJob() {
+                let self = this;
+                self.errorTrigger = null;
+
+                let params = self.$route.params;
+                let serviceByHost = JSON.parse(process.env.VUE_APP_SERVICES).filter(it => it.host === params.host)[0];
+
+                this.$http.post(serviceByHost.url + '/' + params.class + '/' + params.method)
+                    .then(function (response) { self.fetchData()})
+                    .catch(function (err) {
+                        self.errorTrigger = err;
+                    });
+            },
             cssClassForRun(run) {
                 let style = 'is-primary';
 
