@@ -1,7 +1,3 @@
 module.exports = {
-    configureWebpack: {
-        output: {
-            publicPath: './'
-        }
-    }
+    baseUrl: './'
 };
