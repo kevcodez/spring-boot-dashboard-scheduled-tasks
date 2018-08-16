@@ -97,7 +97,7 @@ export function getEnvironmentSettings() {
 
 # Development
 
-Simple run `yarn serve` for starting a webserver with hot reload and everything you need. You may the server url in .env.development.
+Simple run `yarn serve` for starting a webserver with hot reload and everything you need. You should change the URLs in getEnvironmentSettings.js.
 
 For fetching data from the services, [Vue-Resource](https://github.com/pagekit/vue-resource) is used. Vue-Resource also lets you add authentication very easily.
 
