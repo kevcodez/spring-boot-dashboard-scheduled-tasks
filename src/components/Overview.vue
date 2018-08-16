@@ -41,6 +41,7 @@
 
 <script>
     import OverviewJobs from "./OverviewJobs";
+    import {getCurrentEnvironment} from "../getEnvironmentSettings";
 
     export default {
         name: "Overview",
@@ -48,7 +49,7 @@
         data() {
             return {
                 jobs: null,
-                services: JSON.parse(process.env.VUE_APP_SERVICES)
+                services: getCurrentEnvironment().services
             };
         },
         created() {

@@ -12,12 +12,15 @@ import 'vue-awesome/icons/check-circle';
 import 'vue-awesome/icons/exclamation-circle';
 import 'vue-awesome/icons/pause';
 import Icon from 'vue-awesome/components/Icon';
+import {getCurrentEnvironment} from "./getEnvironmentSettings";
 
 Vue.config.productionTip = false;
 
 Vue.use(VueRouter);
 Vue.use(VueResource);
 Vue.component('icon', Icon);
+
+Vue.http.options.root = getCurrentEnvironment().baseUrl;
 
 const routes = [
     {path: '/', component: Overview},

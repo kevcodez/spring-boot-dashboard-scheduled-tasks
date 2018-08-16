@@ -91,7 +91,8 @@
 </template>
 
 <script>
-    import moment from 'moment'
+    import moment from 'moment';
+    import {getCurrentEnvironment} from "../getEnvironmentSettings";
 
     export default {
         name: "Job",
@@ -100,7 +101,8 @@
                 loading: false,
                 job: null,
                 error: null,
-                errorTrigger: null
+                errorTrigger: null,
+                services: getCurrentEnvironment().services
             };
         },
         created() {
@@ -119,7 +121,7 @@
                 self.errorTrigger = null;
 
                 let params = self.$route.params;
-                let serviceByHost = JSON.parse(process.env.VUE_APP_SERVICES).filter(it => it.host === params.host)[0];
+                let serviceByHost = JSON.parse(self.services).filter(it => it.host === params.host)[0];
 
                 this.$http.post(serviceByHost.url + '/' + params.class + '/' + params.method)
                     .then(function (response) { self.fetchData()})
@@ -150,7 +152,7 @@
                 let self = this;
 
                 let params = self.$route.params;
-                let serviceByHost = JSON.parse(process.env.VUE_APP_SERVICES).filter(it => it.host === params.host)[0];
+                let serviceByHost = JSON.parse(self.services).filter(it => it.host === params.host)[0];
                 this.$http.get(serviceByHost.url + '/' + params.class + '/' + params.method)
                     .then(function (response) {
                         self.loading = false;

@@ -66,6 +66,7 @@
 
 <script>
     import moment from 'moment';
+    import {getCurrentEnvironment} from "../getEnvironmentSettings";
 
     export default {
         name: "Run",
@@ -99,7 +100,7 @@
                 let self = this;
 
                 let params = this.$route.params;
-                let serviceByHost = JSON.parse(process.env.VUE_APP_SERVICES).filter(it => it.host === params.host)[0];
+                let serviceByHost = JSON.parse(getCurrentEnvironment()).filter(it => it.host === params.host)[0];
                 this.$http.get(serviceByHost.url + '/' + params.class + '/' + params.method + '/' + params.uuid)
                     .then(response => {
                         self.loading = false;
