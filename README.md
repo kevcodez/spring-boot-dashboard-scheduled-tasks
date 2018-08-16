@@ -8,15 +8,41 @@ The dashboard allows the configuration of multiple services.
 
 # Images
 
+## Overview
+
 ![Overview of the jobs](images/dashboard_1.PNG?raw=true)
+
+* Switch between environments
+* List of all services configured
+* Select a specific service to view jobs from the service
+* Info about latest run
+* Status from latest run (not run, failed, success)
+
+## Mobile View
 
 ![Mobile view](images/dashboard_2.PNG?raw=true)
 
+## Specific Job
+
 ![View runs from a specific job](images/dashboard_3.PNG?raw=true)
+
+* Last 10 runs with timings
+* Stats
+** Average runtime
+** Run count
+** Exceptions occured
+* CRON settings
+
+If the job did not run yet, it looks like this:
 
 ![Specific job, when job did not run yet](images/dashboard_4.PNG?raw=true)
 
+## Specific run
+
 ![Data from a specific run](images/dashboard_5.PNG?raw=true)
+
+* View error details
+* View timing
 
 # Configuration
 
